@@ -1,0 +1,33 @@
+.wh-filter-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    overflow: hidden;
+    gap: 1rem;
+}
+
+.row-not-visible {
+    max-height: 0px;
+    padding: 0;
+
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -ms-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.row-visible {
+    max-height: 96px;
+    padding: 0;
+
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -ms-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.overflow-disabled {
+    overflow: initial !important;
+}

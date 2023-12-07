@@ -1,0 +1,18 @@
+.wh-rounded-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    gap: 8px;
+    border-radius: 24px;
+    background-color: transparent;
+    border: 1px solid #C5C5C5;
+    color: #232323;
+    white-space: nowrap;
+}
+
+.wh-rounded-button-active {
+    background-color: #EC1C24;
+    border: 1px solid #EC1C24;
+    color: #FFFFFF;
+}

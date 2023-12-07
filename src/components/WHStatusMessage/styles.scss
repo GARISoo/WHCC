@@ -1,0 +1,47 @@
+.wh-status-message {
+    padding: 8px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    width: 100%;
+    transition: .2s ease-in-out;
+    margin-bottom: .5rem;
+}
+
+.wh-status-message-absolute {
+    position: absolute;
+    left: 2%;
+    top: 10px;
+    width: 96%;
+}
+
+.wh-status-error {
+    border: 2px solid #EC1C24;
+    background-color: #fbcbcd !important;
+}
+
+.wh-status-error-text {
+    color: #EC1C24;
+    white-space: pre-wrap;
+}
+
+.wh-status-success {
+    border: 2px solid #9AE958;
+    background-color: #e9fada !important;
+}
+
+.wh-status-success-text {
+    color: #3d8800;
+    white-space: pre-wrap;
+}
+
+.wh-status-pending {
+    border: 2px solid #e9e758;
+    background-color: #e9e75838 !important;
+}
+
+.wh-status-pending-text {
+    color: #9b991a;
+    white-space: pre-wrap;
+}

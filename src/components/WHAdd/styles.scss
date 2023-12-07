@@ -1,0 +1,24 @@
+.wh-add-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 16px;
+    height: min-content;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: 0.2s ease-in-out;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: default;
+    }
+
+    &:hover {
+        &:not(:disabled) {
+            opacity: 1;
+        }
+    }
+}
