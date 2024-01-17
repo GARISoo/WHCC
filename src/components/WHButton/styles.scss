@@ -1,5 +1,8 @@
-$dark: rgba(77, 77, 77, 1); // #4D4D4D
+$dark: rgba(35, 35, 35, 1); // #232323
+$almostDark: rgba(64, 64, 64, 1); // #404040
 $red: rgba(236, 28, 36, 1); // #EC1C24
+$redHover: rgba(204, 17, 24, 1); // #CC1118
+$redActive: rgba(169, 9, 15, 1); // #A8090F
 
 .wh-btn-redesign {
     display: flex;
@@ -7,7 +10,7 @@ $red: rgba(236, 28, 36, 1); // #EC1C24
     align-items: center;
     column-gap: 10px;
     padding: 12px 24px;
-    border-radius: 4px;
+    border-radius: 8px;
     box-sizing: border-box;
     transition: 0.3s ease-in-out;
     text-decoration: none;
@@ -47,12 +50,17 @@ $red: rgba(236, 28, 36, 1); // #EC1C24
 }
 
 .border-dark {
-    border: 2px solid $dark;
+    border: 2px solid $almostDark;
 
     &:not(:disabled, .wh-btn-disabled) {
         &:hover {
-            background-color: #232323 !important;
-            border-color: #232323 !important;
+            background-color: $dark !important;
+            border-color: $dark !important;
+        }
+
+        &:active {
+            background-color: $dark !important;
+            border-color: $dark !important;
         }
     }
 }
@@ -62,8 +70,13 @@ $red: rgba(236, 28, 36, 1); // #EC1C24
 
     &:not(:disabled, .wh-btn-disabled) {
         &:hover {
-            background-color: #D0242A !important;
-            border-color: #D0242A !important;
+            background-color: $redHover !important;
+            border-color: $redHover !important;
+        }
+
+        &:active {
+            background-color: $redActive !important;
+            border-color: $redActive !important;
         }
     }
 }

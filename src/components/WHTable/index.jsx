@@ -15,6 +15,10 @@ const WHTable = ({
   secondary,
   actionsDisabled,
   elementsPerPage = 10,
+  customPagination = false,
+  customTotalPages,
+  customCurrentPage,
+  customPageSwitch = () => {},
   sort = true,
   className = '',
 }) => {
@@ -30,15 +34,21 @@ const WHTable = ({
     return null;
   }
 
-  const init = rowData.slice(0, elementsPerPage);
+  const init = customPagination ? rowData : rowData.slice(0, elementsPerPage);
 
   const [visibleData, setVisibleData] = useState(init);
   const [activeSort, setActiveSort] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(rowData.length / elementsPerPage);
+  const totalPages = customPagination
+    ? customTotalPages : Math.ceil(rowData.length / elementsPerPage);
 
   const handleNewPage = (page) => {
+    if (customPagination) {
+      customPageSwitch(page);
+      return;
+    }
+
     const to = page * elementsPerPage;
     const from = to - elementsPerPage;
     const filteredData = rowData.slice(from, to);
@@ -81,6 +91,11 @@ const WHTable = ({
       direction = activeSort?.direction === 'asc' ? 'desc' : 'asc';
     }
 
+    const sortObj = {
+      index,
+      direction,
+    };
+
     const dataContainsIdFields = rowData[0]?._id || rowData[0]?.id;
     const modifiedIndex = dataContainsIdFields ? index + 1 : index;
     const targetKeyName = Object.keys(rowData[0])[modifiedIndex];
@@ -94,11 +109,6 @@ const WHTable = ({
 
       setVisibleData(filteredSortedData);
     }
-
-    const sortObj = {
-      index,
-      direction,
-    };
 
     setActiveSort(sortObj);
   };
@@ -114,7 +124,7 @@ const WHTable = ({
       <div className="flex-scroll-x">
         <table className="wh-table-container__table">
           <TableHead
-            sortEnabled={sort}
+            sortEnabled={customPagination ? false : sort}
             titles={columnTitles}
             secondary={secondary}
             activeSort={activeSort}
@@ -125,17 +135,17 @@ const WHTable = ({
             data={visibleData}
             actions={actions}
             secondary={secondary}
-            currentPage={currentPage}
+            currentPage={customPagination ? customCurrentPage : currentPage}
             columns={columnTitles.length}
             elementsPerPage={elementsPerPage}
             actionsDisabled={actionsDisabled}
           />
         </table>
         <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
+          currentPage={customPagination ? customCurrentPage : currentPage}
+          totalPages={customPagination ? customTotalPages : totalPages}
           handleNewPage={handleNewPage}
-          visible={rowData.length}
+          visible={!!rowData?.length}
         />
       </div>
     </div>

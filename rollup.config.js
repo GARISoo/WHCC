@@ -29,8 +29,10 @@ export default {
             exclude: 'node_modules/**',
             presets: ['@babel/preset-react'],
         }),
-        scss(),
+        scss({
+            include: '**/*.scss',
+        }),
         image(),
-        terser()
+        terser(),
     ],
 };

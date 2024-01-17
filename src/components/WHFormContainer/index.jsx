@@ -28,7 +28,7 @@ const WHFormContainer = ({
   }
 
   return (
-    <form className={`wh-form-container ${className}`} onSubmit={onSubmit} id={id} autoComplete="off" noValidate>
+    <form className={`wh-form-container flex-scroll-global ${className}`} onSubmit={onSubmit} id={id} autoComplete="off" noValidate>
       <WHStatusMessage status={status} message={message} />
       {children}
     </form>

@@ -21,6 +21,7 @@ import WHTable from './components/WHTable'
 import WHTextArea from './components/WHTextArea'
 import WHTimePicker from './components/WHTimePicker'
 import WHTableView from './components/Views/TableView'
+import './styles.scss'
 
 export {
     WHAdd,

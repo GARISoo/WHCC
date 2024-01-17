@@ -61,6 +61,10 @@
     padding-left: 70px !important;
 }
 
+.wh-input-field-w-addedButton {
+    padding-right: 120px !important;
+}
+
 .wh-input-added-text {
     width: 55px;
     height: 44px;
@@ -107,4 +111,13 @@
     &:hover {
         color: #EC1C24
     }
+}
+
+.wh-input-added-btn {
+    overflow: hidden;
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    height: 38px;
+    width: 100px;
 }

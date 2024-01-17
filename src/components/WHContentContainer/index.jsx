@@ -16,7 +16,7 @@ const WHContentContainer = ({
   }
 
   return (
-    <div className={`wh-content-container ${className}`}>
+    <div className={`wh-content-container flex-scroll-global ${className}`}>
       <WHStatusMessage status={status} message={message} />
       {children}
     </div>

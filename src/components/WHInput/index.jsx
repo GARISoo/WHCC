@@ -15,6 +15,7 @@ const WHInput = ({
   placeholder,
   autoFocus = false,
   addedText = '',
+  addedButton = null,
   required = false,
   handleClear = null,
   className = '',
@@ -47,6 +48,7 @@ const WHInput = ({
         wh-input-field-v
         ${icon ? 'wh-input-field-w-icon' : ''}
         ${addedText ? 'wh-input-field-w-addedText' : ''}
+        ${addedButton ? 'wh-input-field-w-addedButton' : ''}
         `
       }
       autoComplete="off"
@@ -56,6 +58,11 @@ const WHInput = ({
         notīrīt
       </button>
     ) : null}
+    {!!addedButton && (
+      <div className="wh-input-added-btn">
+        {addedButton}
+      </div>
+    )}
   </div>
 );
 

@@ -5,6 +5,7 @@ import WHModalContainer from '../../WHModalContainer';
 import WHButton from '../../WHButton';
 import WHTable from '../../WHTable';
 import WHInput from '../../WHInput';
+import './styles.scss';
 
 // const containerProps = {
 //   status: '',
@@ -56,43 +57,46 @@ const TableView = ({
       <WHModalContainer {...modalProps} />
     ) : null}
     {title ? (
-      <h3 className="padd-bot-4 mobile-center">
+      <h3 className="padd-bot-2 mobile-center">
         {title}
       </h3>
     ) : null}
-    {createProps ? (
-      <WHButton
-        {...createProps}
-        text="Pievienot"
-        icon="fa-solid fa-plus"
-        className="mobile-center"
-        type="link"
-        outline
-        small
-        right
-      />
-    ) : null}
     {filterProps ? (
-      <form className="d-flex justify-content-start align-items-end gapx-2" onSubmit={filterProps?.handleSubmit}>
-        <WHInput
-          value={filterProps?.value}
-          onChange={filterProps?.handleChange}
-          name={filterProps?.name}
-          placeholder="Ievadīt"
-          label="Meklēšanas kritērijs"
-          icon="fa-solid fa-search"
-          disabled={filterProps?.disabled}
-          handleClear={filterProps?.handleClear}
-        />
-        <WHButton
-          small
-          outline
-          secondary
-          type="submit"
-          text="Meklēt"
-          disabled={filterProps?.disabled}
-        />
-      </form>
+      <div className="d-flex w-100 table-view-filters">
+        <form className="d-flex w-100 justify-content-start align-items-end" onSubmit={filterProps?.handleSubmit}>
+          <WHInput
+            value={filterProps?.value}
+            onChange={filterProps?.handleChange}
+            name={filterProps?.name}
+            placeholder="Ievadīt"
+            label="Meklēšanas kritērijs"
+            icon="fa-solid fa-search"
+            disabled={filterProps?.disabled}
+            handleClear={filterProps?.handleClear}
+          />
+          <WHButton
+            small
+            secondary
+            outline
+            type="submit"
+            text="Meklēt"
+            icon="fas fa-search search-prop"
+            disabled={filterProps?.disabled}
+            className="ms-1"
+          />
+        </form>
+        {createProps ? (
+          <WHButton
+            {...createProps}
+            icon="fa-solid fa-plus"
+            text="Pievienot"
+            className="ms-2 create-add-prop"
+            type="link"
+            small
+            right
+          />
+        ) : null}
+      </div>
     ) : null}
     {children || null}
     <WHTable {...tableProps} />
