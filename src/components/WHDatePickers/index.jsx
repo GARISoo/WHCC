@@ -7,11 +7,10 @@ import SelectedValue from './components/SelectedValue';
 import './styles.scss';
 import '../../styles.scss';
 
-const weekDayNames = ['Pr', 'Ot', 'Tr', 'Ce', 'Pk', 'Se', 'Sv'];
-
 const WHDatePicker = ({
   label,
   name,
+  locale = 'lv',
   value,
   disabled,
   required = false,
@@ -26,6 +25,48 @@ const WHDatePicker = ({
   const [currentMonth, setCurrentMonth] = useState('');
   const [currentMonthData, setCurrentMonthData] = useState([]);
   const calendarRef = useRef(null);
+
+  const translations = {
+    lv: {
+      weekDayNames: ['Pr', 'Ot', 'Tr', 'Ce', 'Pk', 'Se', 'Sv'],
+      previousYear: "Iepriekšējais gads",
+      previousMonth: "Iepriekšējais mēnesis",
+      nextYear: "Nākamais gads",
+      nextMonth: "Nākošais mēnesis",
+      today: "Šodien",
+      clear: "Notīrīt",
+      close: "Aizvērt",
+    },
+    en: {
+      weekDayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      previousYear: "Previous year",
+      previousMonth: "Previous month",
+      nextYear: "Next year",
+      nextMonth: "Next month",
+      today: "Today",
+      clear: "Clear",
+      close: "Close",
+    },
+    ru: {
+      weekDayNames: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+      previousYear: "Предыдущий год",
+      previousMonth: "Предыдущий месяц",
+      nextYear: "Следующий год",
+      nextMonth: "Следующий месяц",
+      today: "Сегодня",
+      clear: "Очистить",
+      close: "Закрыть"
+    }
+  }
+
+  const weekDayNames = translations[locale || 'lv'].weekDayNames
+  const previousYear = translations[locale || 'lv'].previousYear
+  const previousMonth = translations[locale || 'lv'].previousMonth
+  const nextYear = translations[locale || 'lv'].nextYear
+  const nextMonth = translations[locale || 'lv'].nextMonth
+  const today = translations[locale || 'lv'].today
+  const clear = translations[locale || 'lv'].clear
+  const close = translations[locale || 'lv'].close
 
   const toggleCalendar = (e) => {
     e.stopPropagation();
@@ -181,7 +222,7 @@ const WHDatePicker = ({
               {!invalidDate ? (
                 <button
                   onClick={handlePreviousYear}
-                  title="Iepriekšējais gads"
+                  title={previousYear}
                   className="wh-date-picker-nav-btn"
                   type="button"
                 >
@@ -196,7 +237,7 @@ const WHDatePicker = ({
               {!invalidDate ? (
                 <button
                   onClick={handleNextYear}
-                  title="Nākamais gads"
+                  title={nextYear}
                   className="wh-date-picker-nav-btn"
                   type="button"
                 >
@@ -210,7 +251,7 @@ const WHDatePicker = ({
               {!invalidDate ? (
                 <button
                   onClick={handlePreviousMonth}
-                  title="Iepriekšējais mēnesis"
+                  title={previousMonth}
                   className="wh-date-picker-nav-btn-month"
                   type="button"
                 >
@@ -225,7 +266,7 @@ const WHDatePicker = ({
               {!invalidDate ? (
                 <button
                   onClick={handleNextMonth}
-                  title="Nākamais mēnesis"
+                  title={nextMonth}
                   className="wh-date-picker-nav-btn-month"
                   type="button"
                 >
@@ -280,19 +321,19 @@ const WHDatePicker = ({
                 <button type="button" className="wh-date-picker-action-btn" onClick={selectToday}>
                   <i className="fa fa-thumbtack" />
                   <span>
-                    Šodien
+                    {today}
                   </span>
                 </button>
                 <button type="button" className="wh-date-picker-action-btn" onClick={clearValue}>
                   <i className="fa fa-minus" />
                   <span>
-                    Notīrīt
+                    {clear}
                   </span>
                 </button>
                 <button type="button" className="wh-date-picker-action-btn" onClick={toggleCalendar}>
                   <i className="fa fa-xmark" />
                   <span>
-                    Aizvērt
+                    {close}
                   </span>
                 </button>
               </div>

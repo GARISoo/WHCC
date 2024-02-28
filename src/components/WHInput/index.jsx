@@ -18,6 +18,7 @@ const WHInput = ({
   addedButton = null,
   required = false,
   handleClear = null,
+  clearText = 'notīrīt',
   className = '',
 }) => (
   <div className={`wh-input-container-v ${className}`} style={{ flex: `1 0 ${width}` }}>
@@ -55,7 +56,7 @@ const WHInput = ({
     />
     {handleClear && value ? (
       <button type="button" className="wh-input-clear-btn" onClick={handleClear} disabled={disabled}>
-        notīrīt
+        {clearText || 'notīrīt'}
       </button>
     ) : null}
     {!!addedButton && (

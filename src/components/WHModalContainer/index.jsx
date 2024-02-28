@@ -42,6 +42,7 @@ class WHModalContainer extends Component {
       disabled,
       height,
       width,
+      locale,
       noPadding,
     } = this.props;
 
@@ -54,6 +55,24 @@ class WHModalContainer extends Component {
       description = '',
       id,
     } = modalDetails;
+
+    const translations = {
+      lv: {
+        accept: "Apstiprināt",
+        back: "atpakaļ",
+        close: "Aizvērt",
+      },
+      en: {
+        accept: "Accept",
+        back: "back",
+        close: "Close",
+      },
+      ru: {
+        accept: "Подтвердить",
+        back: "назад",
+        close: "Закрыть"
+      }
+    }
 
     return (
       <div className="wh-modal-background">
@@ -76,7 +95,7 @@ class WHModalContainer extends Component {
               loading={submitLoading}
               disabled={disabled || loading}
               onClick={goBack || closeModal}
-              text={goBack ? '← atpakaļ' : 'Aizvērt'}
+              text={goBack ? translations[locale || 'lv'].back : translations[locale || 'lv'].close}
               small
             />
             {confirmModal ? (
@@ -85,7 +104,7 @@ class WHModalContainer extends Component {
                 disabled={disabled || loading}
                 secondary
                 onClick={() => confirmModal(id)}
-                text="Apstiprināt"
+                text={translations[locale || 'lv'].accept}
                 small
               />
             ) : null}

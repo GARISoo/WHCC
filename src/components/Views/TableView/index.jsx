@@ -45,13 +45,36 @@ import './styles.scss';
 
 const TableView = ({
   title,
+  locale,
   children,
   tableProps,
   modalProps,
   createProps,
   filterProps,
   containerProps,
-}) => (
+}) => {
+  const translations = {
+    lv: {
+      placeholder: "Ievadīt",
+      label: "Meklēšanas kritērijs",
+      search: "Meklēt",
+      add: "Pievienot"
+    },
+    en: {
+      placeholder: "Type",
+      label: "Search criteria",
+      search: "Search",
+      add: "Create"
+    },
+    ru: {
+      placeholder: "Входить",
+      label: "Критерий поиска",
+      search: "Искать",
+      add: "Добавить"
+    }
+  }
+  
+  return (
   <WHContentContainer {...containerProps}>
     {modalProps ? (
       <WHModalContainer {...modalProps} />
@@ -68,8 +91,8 @@ const TableView = ({
             value={filterProps?.value}
             onChange={filterProps?.handleChange}
             name={filterProps?.name}
-            placeholder="Ievadīt"
-            label="Meklēšanas kritērijs"
+            placeholder={translations[locale || 'lv'].placeholder}
+            label={translations[locale || 'lv'].label}
             icon="fa-solid fa-search"
             disabled={filterProps?.disabled}
             handleClear={filterProps?.handleClear}
@@ -79,7 +102,7 @@ const TableView = ({
             secondary
             outline
             type="submit"
-            text="Meklēt"
+            text={translations[locale || 'lv'].search}
             icon="fas fa-search search-prop"
             disabled={filterProps?.disabled}
             className="ms-1"
@@ -89,7 +112,7 @@ const TableView = ({
           <WHButton
             {...createProps}
             icon="fa-solid fa-plus"
-            text="Pievienot"
+            text={translations[locale || 'lv'].add}
             className="ms-2 create-add-prop"
             type="link"
             small
@@ -101,6 +124,6 @@ const TableView = ({
     {children || null}
     <WHTable {...tableProps} />
   </WHContentContainer>
-);
+)};
 
 export default TableView;

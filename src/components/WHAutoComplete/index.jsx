@@ -8,6 +8,7 @@ import '../../styles.scss';
 
 const WHAutoComplete = ({
   placeholder = 'Izvēlies',
+  locale = 'lv',
   multiselect = false,
   required = false,
   options = [],
@@ -23,6 +24,21 @@ const WHAutoComplete = ({
   const [showingSelection, setShowingSelection] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const autoCompleteRef = useRef(null);
+
+    const translations = {
+      lv: {
+        search: "Meklēt",
+        selected: "Izvēlēti"
+      },
+      en: {
+        search: "Search",
+        selected: "Selected"
+      },
+      ru: {
+        search: "Искать",
+        selected: "Выбрано"
+      }
+    }
 
   const toggleSelection = (e) => {
     e.stopPropagation();
@@ -158,6 +174,11 @@ const WHAutoComplete = ({
     }
   }, [options]);
 
+ const reorderedOptions = selectedItems && selectedItems.length ?  [
+    ...selectedItems,
+    ...filteredOptions.filter((option) => !selectedItems.some((item) => item.value === option.value))
+  ] : filteredOptions;
+
   const formElement = autoCompleteRef?.current?.closest('form');
   const formValidated = formElement ? formElement?.classList?.contains('was-validated') : false;
   const hasValue = value && value.length;
@@ -189,6 +210,7 @@ const WHAutoComplete = ({
           name={name}
           items={selectedItems}
           placeholder={placeholder}
+          text={translations[locale || 'lv'].selected}
           showingSelection={showingSelection}
           handleUnselect={handleBubbleUnselect}
         />
@@ -196,7 +218,7 @@ const WHAutoComplete = ({
       <div className={`wh-autocomplete-selection ${showingSelection ? 'showing-selection' : 'not-showing-selection'}`}>
         {showingSelection ? (
           <WHInput
-            placeholder="Meklēt"
+            placeholder={translations[locale || 'lv'].search}
             icon="fa-solid fa-search"
             value={searchValue}
             autoFocus
@@ -205,7 +227,7 @@ const WHAutoComplete = ({
           />
         ) : null}
         <div className="wh-autocomplete-option-wrapper">
-          {filteredOptions.map((option, index) => {
+          {reorderedOptions.map((option, index) => {
             const hasDescription = !!option?.description;
             const optionName = option?.title || option?.name;
             const selected = multiselect ? value.includes(option.value) : value === option.value;

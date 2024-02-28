@@ -11,9 +11,10 @@ const WHTimePicker = ({
   name,
   value,
   disabled,
+  clearText,
   required = false,
   placeholder = '',
-  onChange: passChanges = () => {},
+  onChange: passChanges = () => { },
   className = '',
 }) => {
   const [showingTimeSelection, setShowingTimeSelection] = useState(false);
@@ -230,7 +231,7 @@ const WHTimePicker = ({
         <SelectedValue value={value} />
         {value ? (
           <button type="button" className="wh-time-clear-btn" onClick={handleClear} disabled={disabled}>
-            notīrīt
+            {clearText || 'notīrīt'}
           </button>
         ) : null}
       </button>

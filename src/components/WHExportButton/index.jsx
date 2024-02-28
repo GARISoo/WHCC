@@ -59,6 +59,7 @@ class WHExportButton extends Component {
       handleExcel,
       className = '',
       disabled,
+      text = 'Eksportēt'
     } = this.props;
 
     const { dropdownActive } = this.state;
@@ -84,7 +85,7 @@ class WHExportButton extends Component {
         >
           <i className="fa-solid fa-file-arrow-down btn-icon wh-text-dark" />
           <span className="wh-text-dark">
-            Eksportēt
+            {text || 'Eksportēt'}
           </span>
         </button>
         <div
@@ -102,7 +103,7 @@ class WHExportButton extends Component {
             >
               <img src={pdf} alt="pdf" className="wh-export-icon" />
               <span className="wh-text-light">
-                PDF formāts
+                PDF
               </span>
             </button>
           ) : null}
@@ -117,7 +118,7 @@ class WHExportButton extends Component {
             >
               <img src={xlsx} alt="xlsx" className="wh-export-icon" />
               <span className="wh-text-light">
-                Excel formāts
+                Excel
               </span>
             </button>
           ) : null}

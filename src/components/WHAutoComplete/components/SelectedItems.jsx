@@ -2,7 +2,7 @@ import React from 'react';
 import ItemsWrapper from './ItemsWrapper';
 
 const SelectedItems = ({
-  items, name, handleUnselect, placeholder, showingSelection,
+  items, name, handleUnselect, placeholder, showingSelection, text,
 }) => {
   if (!items) {
     return (
@@ -20,6 +20,7 @@ const SelectedItems = ({
     return (
       <ItemsWrapper
         items={items}
+        text={text}
         name={name}
         handleUnselect={handleUnselect}
         showingSelection={showingSelection}

@@ -14,6 +14,7 @@ const WHTextArea = ({
   placeholder = 'Ievadīt',
   required = false,
   handleClear = null,
+  clearText = 'notīrīt',
   className = '',
 }) => (
   <div className={`wh-text-area-container ${className}`} style={{ flex: `1 0 ${width}` }}>
@@ -42,7 +43,7 @@ const WHTextArea = ({
     />
     {handleClear ? (
       <button type="button" className="wh-text-area-clear-btn" onClick={handleClear} disabled={disabled}>
-        notīrīt
+        {clearText || 'notīrīt'}
       </button>
     ) : null}
   </div>
