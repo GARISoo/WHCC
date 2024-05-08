@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import WHContentContainer from '../../WHContentContainer';
 import WHModalContainer from '../../WHModalContainer';
 import WHButton from '../../WHButton';
 import WHTable from '../../WHTable';
@@ -51,7 +50,6 @@ const TableView = ({
   modalProps,
   createProps,
   filterProps,
-  containerProps,
 }) => {
   const translations = {
     lv: {
@@ -75,7 +73,7 @@ const TableView = ({
   }
   
   return (
-  <WHContentContainer {...containerProps}>
+  <>
     {modalProps ? (
       <WHModalContainer {...modalProps} />
     ) : null}
@@ -123,7 +121,7 @@ const TableView = ({
     ) : null}
     {children || null}
     <WHTable {...tableProps} />
-  </WHContentContainer>
+  </>
 )};
 
 export default TableView;

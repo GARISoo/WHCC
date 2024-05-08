@@ -3,12 +3,10 @@ import WHAdd from './components/WHAdd'
 import WHAutoComplete from './components/WHAutoComplete'
 import WHButton from './components/WHButton'
 import WHCheckbox from './components/WHCheckbox'
-import WHContentContainer from './components/WHContentContainer'
 import WHCustomNavbar from './components/WHCustomNavbar'
 import WHDatePickers from './components/WHDatePickers'
 import WHExportButton from './components/WHExportButton'
 import WHFilterRow from './components/WHFilterRow'
-import WHFormContainer from './components/WHFormContainer'
 import WHInput from './components/WHInput'
 import WHLoader from './components/WHLoader'
 import WHModalContainer from './components/WHModalContainer'
@@ -29,12 +27,10 @@ export {
     WHAutoComplete,
     WHButton,
     WHCheckbox,
-    WHContentContainer,
     WHCustomNavbar,
     WHDatePickers,
     WHExportButton,
     WHFilterRow,
-    WHFormContainer,
     WHInput,
     WHLoader,
     WHModalContainer,
