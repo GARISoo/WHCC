@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import styles from './styles.module.scss';
+import './styles.scss'
 import '../../styles.scss'
 
 const WHDateInput = ({
@@ -119,29 +119,29 @@ const WHDateInput = ({
   };
 
   return (
-    <div className={`${styles.dateInputContainer} ${className} ${disabled ? styles.dateInputContainerDisabled : ''}`}>
-      <label htmlFor="year" className={`${styles.inputLabel} ${required ? 'required-input' : ''}`}>
+    <div className={`dateInputContainer ${className} ${disabled ? 'dateInputContainerDisabled' : ''}`}>
+      <label htmlFor="year" className={`date-input-label ${required ? 'required-input' : ''}`}>
         {label}
       </label>
-      <i className={`fa fa-calendar gray ${styles.inputIcon}`} />
+      <i className={`fa fa-calendar gray inputIcon`} />
       <input
         name={name}
         type="text"
         id={name || ''}
         disabled
         className={`
-                ${styles.dateInputField} 
+                dateInputField
                  ${checkIfInvalid && checkIfInvalid(name) ? 'custom-form-control-invalid' : ''}
                  `}
         autoComplete="off"
       />
-      <span className={styles.dateInputSpanWrapper}>
+      <span className="dateInputSpanWrapper">
         <input
           type="text"
           name="year"
           id="year"
           placeholder="yyyy"
-          className={styles.inputDate}
+          className="inputDate"
           maxLength={4}
           value={year}
           onChange={(e) => handleInputChange('year', e.target.value)}
@@ -155,7 +155,7 @@ const WHDateInput = ({
           id="month"
           placeholder="mm"
           maxLength={2}
-          className={styles.inputDate}
+          className="inputDate"
           value={month}
           onChange={(e) => handleInputChange('month', e.target.value)}
           disabled={disabled}
@@ -168,7 +168,7 @@ const WHDateInput = ({
           id="day"
           placeholder="dd"
           maxLength={2}
-          className={styles.inputDate}
+          className="inputDate"
           value={day}
           onChange={(e) => handleInputChange('day', e.target.value)}
           disabled={disabled}
