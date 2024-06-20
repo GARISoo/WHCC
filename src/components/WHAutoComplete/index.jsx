@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useEffect, useState, useRef } from 'react';
-import WHInput from '../WHInput';
+import React, {
+  useEffect, useState, useRef, useMemo,
+} from 'react';
+import { WHInput } from 'whcc';
 import determineSelectedItems from './helpers/determineSelectedItems';
 import SelectedItems from './components/SelectedItems';
 import './styles.scss';
@@ -20,38 +22,25 @@ const WHAutoComplete = ({
   onChange: passChanges,
   className = '',
 }) => {
-  const [filteredOptions, setFilteredOptions] = useState(options);
   const [showingSelection, setShowingSelection] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const autoCompleteRef = useRef(null);
+  const optionRefs = useRef([]);
 
-    const translations = {
-      lv: {
-        search: "Meklēt",
-        selected: "Izvēlēti"
-      },
-      en: {
-        search: "Search",
-        selected: "Selected"
-      },
-      ru: {
-        search: "Искать",
-        selected: "Выбрано"
-      }
-    }
-
-  const toggleSelection = (e) => {
-    e.stopPropagation();
-
-    if (!showingSelection) {
-      setShowingSelection(true);
-    } else {
-      const clickedOnTextBubble = e?.target?.className?.includes('selection-remove-option');
-
-      if (!clickedOnTextBubble) {
-        setShowingSelection(false);
-      }
-    }
+  const translations = {
+    lv: {
+      search: 'Meklēt',
+      selected: 'Izvēlēti',
+    },
+    en: {
+      search: 'Search',
+      selected: 'Selected',
+    },
+    ru: {
+      search: 'Искать',
+      selected: 'Выбрано',
+    },
   };
 
   const selectedItems = determineSelectedItems({
@@ -61,39 +50,32 @@ const WHAutoComplete = ({
     multiselect,
   });
 
-  const filterOptions = () => {
-    const optionsCopy = [...options];
+  // Memoized filtering of options based on search input
+  const filteredOptions = useMemo(() => options.filter((option) => {
+    const title = option?.title || option?.name;
+    const description = option?.description || option?.desc;
+    const searchInput = searchValue
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s]/g, '')
+      .toLowerCase();
 
-    const filteredOptionsCopy = optionsCopy.filter((option) => {
-      const title = option?.title || option?.name;
-      const description = option?.description || option?.desc;
-      const searchInput = searchValue
-        .toString()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^\w\s]/g, '')
-        .toLowerCase();
+    let titleMatch = false;
+    let descMatch = false;
 
-      let titleMatch = false;
-      let descMatch = false;
+    if (title) {
+      const normalized = title.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      titleMatch = normalized.includes(searchInput);
+    }
 
-      if (title) {
-        const normalized = title.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        titleMatch = normalized.includes(searchInput);
-      }
+    if (description) {
+      const normalized = description.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      descMatch = normalized.includes(searchInput);
+    }
 
-      if (description) {
-        const normalized = description.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        descMatch = normalized.includes(searchInput);
-      }
-
-      const match = titleMatch || descMatch;
-
-      return match;
-    });
-
-    setFilteredOptions(filteredOptionsCopy);
-  };
+    return titleMatch || descMatch;
+  }), [options, searchValue]);
 
   const handleOptionSelection = (targetValue) => {
     const event = {
@@ -143,6 +125,21 @@ const WHAutoComplete = ({
     passChanges(event);
   };
 
+  const toggleSelection = (e) => {
+    e.stopPropagation();
+    setHighlightedIndex(-1);
+
+    if (!showingSelection) {
+      setShowingSelection((prev) => !prev);
+    } else {
+      const clickedOnTextBubble = e?.target?.className?.includes('selection-remove-option');
+
+      if (!clickedOnTextBubble) {
+        setShowingSelection((prev) => !prev);
+      }
+    }
+  };
+
   const handleClickOutside = (e) => {
     const autoCompleteWrapper = autoCompleteRef?.current;
     const validClassName = typeof e?.target?.className === 'string';
@@ -158,26 +155,68 @@ const WHAutoComplete = ({
     }
   };
 
-  useEffect(() => {
-    filterOptions();
+  const scrollIntoView = (index) => {
+    const option = optionRefs.current[index];
+    if (option) {
+      window.requestAnimationFrame(() => {
+        option.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
+  };
 
+  const reorderedOptions = useMemo(() => (selectedItems && selectedItems.length ? [
+    ...selectedItems,
+    ...filteredOptions.filter((option) => (
+      !selectedItems.some((item) => item.value === option.value))),
+  ] : filteredOptions), [selectedItems, filteredOptions]);
+
+  const handleKeyDown = (e) => {
+    if (!showingSelection) return;
+
+    switch (e.key) {
+    case 'ArrowDown':
+      e.preventDefault();
+      setHighlightedIndex((prevIndex) => (prevIndex + 1) % reorderedOptions.length);
+      scrollIntoView((highlightedIndex + 1) % reorderedOptions.length);
+      break;
+    case 'ArrowUp':
+      e.preventDefault();
+      setHighlightedIndex((prevIndex) => (
+        (prevIndex - 1 + reorderedOptions.length) % reorderedOptions.length
+      ));
+      scrollIntoView((highlightedIndex - 1 + reorderedOptions.length) % reorderedOptions.length);
+      break;
+    case 'Enter':
+      e.preventDefault();
+      if (highlightedIndex >= 0 && highlightedIndex < reorderedOptions.length) {
+        handleOptionSelection(reorderedOptions[highlightedIndex].value);
+      }
+      break;
+    case 'Escape':
+    case 'Tab':
+      e.preventDefault();
+      setShowingSelection(false);
+      break;
+    default:
+      break;
+    }
+  };
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [searchValue]);
+  }, []);
 
   useEffect(() => {
-    if (!searchValue) {
-      setFilteredOptions(options);
-    }
-  }, [options]);
+    document.addEventListener('keydown', handleKeyDown);
 
- const reorderedOptions = selectedItems && selectedItems.length ?  [
-    ...selectedItems,
-    ...filteredOptions.filter((option) => !selectedItems.some((item) => item.value === option.value))
-  ] : filteredOptions;
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showingSelection, handleKeyDown]); // Attach handleKeyDown as a dependency
 
   const formElement = autoCompleteRef?.current?.closest('form');
   const formValidated = formElement ? formElement?.classList?.contains('was-validated') : false;
@@ -189,16 +228,16 @@ const WHAutoComplete = ({
       style={width ? { flex: `1 0 ${width}` } : {}}
       ref={autoCompleteRef}
     >
-      {label ? (
+      {label && (
         <label htmlFor={label} className={`wh-autocomplete-label wh-text-gray ${required ? 'required-input' : ''}`}>
           {label}
         </label>
-      ) : null}
+      )}
       <button
         onClick={toggleSelection}
         className={`
-        wh-autocomplete-open-btn ${showingSelection ? 'rotate-arrow' : ''}
-         ${required ? `wh-form-control-overwrite ${formValidated ? (hasValue ? 'custom-form-control-valid' : 'custom-form-control-invalid') : ''}` : ''}
+          wh-autocomplete-open-btn ${showingSelection ? 'rotate-arrow' : ''}
+          ${required ? `wh-form-control-overwrite ${formValidated ? (hasValue ? 'custom-form-control-valid' : 'custom-form-control-invalid') : ''}` : ''}
         `}
         type="button"
         value={value}
@@ -216,40 +255,40 @@ const WHAutoComplete = ({
         />
       </button>
       <div className={`wh-autocomplete-selection ${showingSelection ? 'showing-selection' : 'not-showing-selection'}`}>
-        {showingSelection ? (
+        {showingSelection && (
           <WHInput
             placeholder={translations[locale || 'lv'].search}
+            autoFocus
             icon="fa-solid fa-search"
             value={searchValue}
-            autoFocus
             onChange={(e) => setSearchValue(e.target.value)}
             handleClear={() => setSearchValue('')}
           />
-        ) : null}
+        )}
         <div className="wh-autocomplete-option-wrapper">
-          {reorderedOptions.map((option, index) => {
-            const hasDescription = !!option?.description;
-            const optionName = option?.title || option?.name;
-            const selected = multiselect ? value.includes(option.value) : value === option.value;
-            const key = `${index.toString()} ${option.value} ${name} ${optionName}`;
+          {reorderedOptions.length ? (
+            reorderedOptions.map((option, index) => {
+              const hasDescription = !!option?.description;
+              const optionName = option?.title || option?.name;
+              const highlighted = index === highlightedIndex;
+              const selected = multiselect ? value.includes(option.value) : value === option.value;
+              const key = `${index.toString()} ${option.value} ${name} ${optionName}`;
 
-            return (
-              <div
-                className={`wh-autocomplete-option ${selected ? 'option-selected' : ''}`}
-                onClick={() => handleOptionSelection(option.value)}
-                key={key}
-              >
-                <span className="wh-autocomplete-option-name">
-                  {optionName}
-                </span>
-                {hasDescription ? (
-                  <span className="wh-autocomplete-option-desc">
-                    {option?.description}
-                  </span>
-                ) : null}
-              </div>
-            );
-          })}
+              return (
+                <div
+                  className={`wh-autocomplete-option ${selected ? 'option-selected' : ''} ${highlighted ? 'option-highlighted' : ''}`}
+                  onClick={() => handleOptionSelection(option.value)}
+                  key={key}
+                  ref={(el) => { optionRefs.current[index] = el; }}
+                >
+                  <span className="wh-autocomplete-option-name">{optionName}</span>
+                  {hasDescription && <span className="wh-autocomplete-option-desc">{option?.description}</span>}
+                </div>
+              );
+            })
+          ) : (
+            <span className="wh-autocomplete-option-name no-results">Nav ierakstu</span>
+          )}
         </div>
       </div>
     </div>

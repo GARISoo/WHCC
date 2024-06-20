@@ -68,6 +68,27 @@
     margin-bottom: 4px;
 }
 
+.option-highlighted {
+    background-color: rgba(242, 242, 242, 0.5); // Change this to your desired highlight color
+}
+
+.option-disabled {
+    pointer-events: none !important;
+    background-color: rgb(252, 252, 252) !important;
+    opacity: 0.5;
+
+    span {
+        color: #ff9c9c !important;
+    }
+}
+
+.no-results {
+    padding: .5rem;
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.8;
+}
+
 .wh-autocomplete-text-wrapper {
     display: flex;
     justify-content: flex-start;

@@ -20,6 +20,20 @@
     white-space: nowrap;
 }
 
+.wh-select-option.option-highlighted {
+    background-color: rgba(242, 242, 242, 0.5); // Change this to your desired highlight color
+}
+
+.option-disabled {
+    pointer-events: none !important;
+    background-color: rgb(252, 252, 252) !important;
+    opacity: 0.5;
+
+    span {
+        color: #ff9c9c !important;
+    }
+}
+
 .wh-select-open-btn {
     appearance: none;
     -moz-appearance: none;
@@ -72,6 +86,13 @@
         border-color: #dc3545 !important;
         box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, .25) !important;
     }
+}
+
+.no-results {
+    padding: .5rem;
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.8;
 }
 
 .custom-form-control-invalid:after {

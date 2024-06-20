@@ -1,0 +1,148 @@
+.inputLabel {
+    &:not(i, p) {
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.04em;
+        align-self: flex-start;
+        padding-left: 6px;
+        white-space: nowrap;
+        color: rgb(147, 147, 147);
+    }
+}
+
+.dateInputContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 200px;
+    position: relative;
+}
+
+.dateInputContainerDisabled {
+    i {
+        color: #a8a8a8;
+    }
+
+    button {
+        display: none;
+    }
+}
+
+.dateInputSpanWrapper {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0px;
+    bottom: 7px;
+    left: 45px;
+
+    input {
+        width: 34px;
+        border-radius: 4px;
+        outline: 0;
+        border: none;
+        text-align: center;
+        font-size: 16px;
+
+        &::placeholder {
+            font-weight: 400;
+            opacity: 0.5;
+            border: none !important;
+        }
+
+        &:disabled {
+            color: #a8a8a8;
+            pointer-events: none;
+            background-color: white !important;
+
+            &::placeholder {
+                color: #a8a8a8;
+                font-weight: 400;
+            }
+        }
+
+        &:first-child {
+            width: 48px;
+        }
+    }
+}
+
+.inputIcon {
+    width: 20px;
+    height: 20px;
+    font-size: 19px;
+    color: #a8a8a8;
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dateInputField {
+    box-sizing: border-box;
+    padding: 8px 16px 8px 45px !important;
+    height: 44px;
+    overflow: hidden;
+    border: 1px solid rgba(44, 46, 74, 0.3);
+    border-radius: 4px;
+    align-self: stretch;
+    width: 100%;
+    margin: 0;
+    background-color: white;
+    outline: 0;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px;
+    transition: box-shadow 0.2s ease-in-out;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.02em;
+    display: flex;
+    text-align: flex-start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &::placeholder {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.02em;
+        padding-top: 4px;
+        width: 100%;
+        text-align: left;
+        color: #a8a8a8 !important;
+    }
+
+    &:disabled {
+        color: #a8a8a8;
+        cursor: default;
+        background-color: white;
+
+        &::placeholder {
+            font-weight: 400;
+            color: #a8a8a8;
+        }
+    }
+
+    &:focus {
+        border: 1px solid rgba(235, 171, 7, 0.5);
+        box-shadow: 0 0 0 0.15rem rgba(235, 171, 7, 0.25);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .inputIcon {
+        display: none !important;
+    }
+
+    .dateInputField {
+        padding: 8px 16px;
+    }
+}
