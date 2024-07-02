@@ -12,15 +12,15 @@ const WHDateInput = ({
   checkIfInvalid,
   onChange = () => { },
 }) => {
-  const yearRef = useRef(null);
-  const monthRef = useRef(null);
   const dayRef = useRef(null);
+  const monthRef = useRef(null);
+  const yearRef = useRef(null);
 
-  const [year, month, day] = value ? value.split('-') : ['', '', ''];
+  const [day, month, year] = value ? value.split('-') : ['', '', ''];
 
   // Handle changes in the individual day, month, and year inputs
   const handleInputChange = (nameValue, inputValueStr) => {
-    const updatedValue = [year, month, day];
+   const updatedValue = [day, month, year];
 
     const inputValue = Number(inputValueStr);
 
@@ -40,18 +40,18 @@ const WHDateInput = ({
       }
 
       if (inputValue > 31) {
-        updatedValue[2] = '31';
+        updatedValue[0] = '31';
       } else if (inputValue > 0) {
-        updatedValue[2] = inputValueStr;
+        updatedValue[0] = inputValueStr;
       } else if (inputValueStr === '0' && dayIncrement) {
-        updatedValue[2] = '0';
+        updatedValue[0] = '0';
       } else if (inputValueStr === '0' && dayDecrement) {
-        updatedValue[2] = '0';
+        updatedValue[0] = '0';
       } else if (!inputValueStr) {
-        updatedValue[2] = '';
+        updatedValue[0] = '';
       }
 
-      if (!inputValueStr.length) {
+      if (inputValueStr.length === 2) {
         monthRef?.current?.focus();
       }
 
@@ -82,18 +82,18 @@ const WHDateInput = ({
       break;
     case 'year':
       if (inputValue > 2100) {
-        updatedValue[0] = '2100';
+        updatedValue[2] = '2100';
       } else if (inputValue > 0) {
-        updatedValue[0] = inputValueStr;
+        updatedValue[2] = inputValueStr;
       } else if (inputValueStr === '0' && yearIncrement) {
-        updatedValue[0] = '0';
+        updatedValue[2] = '0';
       } else if (inputValueStr === '0' && yearDecrement) {
-        updatedValue[0] = '0';
+        updatedValue[2] = '0';
       } else if (!inputValueStr) {
-        updatedValue[0] = '';
+        updatedValue[2] = '';
       }
 
-      if (inputValueStr.length === 4) {
+      if (!inputValueStr.length) {
         monthRef?.current?.focus();
       }
 
@@ -136,17 +136,17 @@ const WHDateInput = ({
         autoComplete="off"
       />
       <span className="dateInputSpanWrapper">
-        <input
+         <input
           type="text"
-          name="year"
-          id="year"
-          placeholder="yyyy"
+          name="day"
+          id="day"
+          placeholder="dd"
+          maxLength={2}
           className="inputDate"
-          maxLength={4}
-          value={year}
-          onChange={(e) => handleInputChange('year', e.target.value)}
+          value={day}
+          onChange={(e) => handleInputChange('day', e.target.value)}
           disabled={disabled}
-          ref={yearRef}
+          ref={dayRef}
         />
         <span>-</span>
         <input
@@ -160,19 +160,19 @@ const WHDateInput = ({
           onChange={(e) => handleInputChange('month', e.target.value)}
           disabled={disabled}
           ref={monthRef}
-        />
+          />
         <span>-</span>
         <input
           type="text"
-          name="day"
-          id="day"
-          placeholder="dd"
-          maxLength={2}
+          name="year"
+          id="year"
+          placeholder="yyyy"
           className="inputDate"
-          value={day}
-          onChange={(e) => handleInputChange('day', e.target.value)}
+          maxLength={4}
+          value={year}
+          onChange={(e) => handleInputChange('year', e.target.value)}
           disabled={disabled}
-          ref={dayRef}
+          ref={yearRef}
         />
       </span>
     </div>
