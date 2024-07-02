@@ -74,9 +74,9 @@ const WHDateInput = ({
       }
 
       if (inputValueStr.length === 2) {
-        dayRef?.current?.focus();
-      } else if (!inputValueStr.length) {
         yearRef?.current?.focus();
+      } else if (!inputValueStr.length) {
+        dayRef?.current?.focus();
       }
 
       break;
