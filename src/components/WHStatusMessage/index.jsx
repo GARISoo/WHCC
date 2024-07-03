@@ -23,8 +23,6 @@ const WHStatusMessage = ({
 
       return () => clearTimeout(timer);
     }
-
-    return () => {};
   }, [resetTime, handleReset]);
 
   return (

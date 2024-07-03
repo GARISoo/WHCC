@@ -19,7 +19,6 @@ const WHFilterRow = ({
     }
 
     setOverflowDisabled(false);
-    return true;
   }, [visible]);
 
   return (
