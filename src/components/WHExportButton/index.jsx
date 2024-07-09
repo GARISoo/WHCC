@@ -67,7 +67,7 @@ class WHExportButton extends Component {
     if (loading) {
       return (
         <div
-          className="wh-export-btn"
+          className="wh-export-btn-loading"
           style={{ alignSelf: alignment }}
         >
           <WHLoader size={0.4} white />
