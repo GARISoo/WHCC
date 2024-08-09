@@ -18,7 +18,7 @@ const WHTable = ({
   customPagination = false,
   customTotalPages,
   customCurrentPage,
-  customPageSwitch = () => {},
+  customPageSwitch = () => { },
   sort = true,
   className = '',
 }) => {
@@ -100,12 +100,13 @@ const WHTable = ({
     const modifiedIndex = dataContainsIdFields ? index + 1 : index;
     const targetKeyName = Object.keys(rowData[0])[modifiedIndex];
 
-    rowData.sort((a, b) => compare(a, b, direction, targetKeyName));
+    // Use a new array for sorting
+    const sortedData = [...rowData].sort((a, b) => compare(a, b, direction, targetKeyName));
 
-    if (rowData.length) {
+    if (sortedData.length) {
       const to = currentPage * elementsPerPage;
       const from = to - elementsPerPage;
-      const filteredSortedData = rowData.slice(from, to);
+      const filteredSortedData = sortedData.slice(from, to);
 
       setVisibleData(filteredSortedData);
     }
@@ -116,7 +117,7 @@ const WHTable = ({
   useEffect(() => {
     const initialData = rowData.slice(0, elementsPerPage);
     setVisibleData(initialData);
-  }, [rowData]);
+  }, [rowData, elementsPerPage]);
 
   return (
     <div className={`${secondary ? 'wh-table-container-secondary' : 'wh-table-container'} ${className}`}>
