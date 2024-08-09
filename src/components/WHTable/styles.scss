@@ -82,9 +82,11 @@
 }
 
 .wh-table-container__table-row {
+    transition: 0.2s ease-in-out;
+
     td {
         color: #232323;
-        vertical-align: center;
+        vertical-align: middle;
     }
 
     th,
@@ -102,13 +104,16 @@
     }
 
     &:hover {
+        background-color: rgba(240, 240, 240, 0.5);
+
         .wh-table-td-actions {
-            transition: 0.2s ease;
-            opacity: 1;
+            .wh-table-td-actions-wrapper {
+                transition: 0.2s ease;
+                opacity: 1;
+            }
         }
     }
 }
-
 
 .wh-table-container__table-th-container {
     display: flex;
@@ -116,11 +121,11 @@
 }
 
 .wh-table-td-actions {
-    transition: 0.2s ease;
     text-align: right;
-    opacity: 0;
 
     .wh-table-td-actions-wrapper {
+        transition: 0.2s ease;
+        opacity: 0;
         display: flex;
         justify-content: flex-end;
         align-items: center;
