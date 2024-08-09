@@ -19,7 +19,7 @@ const renderRecursiveRows = (
   actions,
   actionsDisabled,
   parentIndex,
-  depthLevel = 0,
+  depthLevel = 1,
 ) => data.map((row, index) => {
   const id = row?._id || row?.id || 'no id';
   const keyForRow = `${index.toString()} row ${id}`;
