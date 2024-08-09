@@ -103,22 +103,28 @@
         line-height: 16px;
         color: #626262;
     }
-
-    &:hover {
-        background-color: rgba(240, 240, 240, 0.5);
-
-        .wh-table-td-actions {
-            .wh-table-td-actions-wrapper {
-                transition: 0.2s ease;
-                opacity: 1;
-            }
-        }
-    }
 }
 
 .wh-table-container__table-th-container {
     display: flex;
     column-gap: 10px;
+}
+
+.wh-table-container__table {
+    tbody {
+        .wh-table-container__table-row {
+            &:hover {
+                background-color: rgba(240, 240, 240, 0.5);
+
+                .wh-table-td-actions {
+                    .wh-table-td-actions-wrapper {
+                        transition: 0.2s ease;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .wh-table-td-actions {

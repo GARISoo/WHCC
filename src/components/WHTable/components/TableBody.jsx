@@ -26,7 +26,7 @@ const renderRecursiveRows = (
   const rowKeys = getObjectKeysWithoutId(row);
   const hasChildrenRows = row?.children && row.children.length;
 
-  const paddingLeft = `${depthLevel * 11}px`;
+  const paddingLeft = `${(depthLevel || 1) * 11}px`;
 
   const indexForRow = (elementsPerPage * (currentPage - 1)) + index + 1;
   const parentRowIndex = parentIndex ? `${parentIndex}.${index + 1}` : `${indexForRow}`;
