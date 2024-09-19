@@ -275,6 +275,7 @@ const WHAutoComplete = ({
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             handleClear={() => setSearchValue('')}
+            clearText={translations[locale].clear}
           />
         )}
         <div className="wh-autocomplete-option-wrapper">

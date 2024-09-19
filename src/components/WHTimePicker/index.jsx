@@ -6,10 +6,29 @@ import '../../styles.scss';
 const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
 const minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
+const translations = {
+  lv: {
+    search: 'Meklēt',
+    selected: 'Izvēlēti',
+    clear: 'Notīrīt'
+  },
+  en: {
+    search: 'Search',
+    selected: 'Selected',
+    clear: 'Clear'
+  },
+  ru: {
+    search: 'Искать',
+    selected: 'Выбрано',
+    selected: 'Очистить',
+  },
+};
+
 const WHTimePicker = ({
   label,
   name,
   value,
+  locale = 'lv',
   disabled,
   clearText,
   required = false,
@@ -231,7 +250,7 @@ const WHTimePicker = ({
         <SelectedValue value={value} />
         {value ? (
           <button type="button" className="wh-time-clear-btn" onClick={handleClear} disabled={disabled}>
-            {clearText || 'notīrīt'}
+            {clearText || translations[locale].clear}
           </button>
         ) : null}
       </button>

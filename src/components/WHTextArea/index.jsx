@@ -2,6 +2,24 @@ import React from 'react';
 import '../../styles.scss';
 import './styles.scss';
 
+const translations = {
+  lv: {
+    search: 'Meklēt',
+    selected: 'Izvēlēti',
+    clear: 'Notīrīt'
+  },
+  en: {
+    search: 'Search',
+    selected: 'Selected',
+    clear: 'Clear'
+  },
+  ru: {
+    search: 'Искать',
+    selected: 'Выбрано',
+    selected: 'Очистить',
+  },
+};
+
 const WHTextArea = ({
   type,
   name,
@@ -9,6 +27,7 @@ const WHTextArea = ({
   label,
   value,
   width,
+  locale = 'lv',
   onChange,
   disabled,
   placeholder = 'Ievadīt',
@@ -43,7 +62,7 @@ const WHTextArea = ({
     />
     {handleClear ? (
       <button type="button" className="wh-text-area-clear-btn" onClick={handleClear} disabled={disabled}>
-        {clearText || 'notīrīt'}
+        {clearText || translations[locale].clear}
       </button>
     ) : null}
   </div>
