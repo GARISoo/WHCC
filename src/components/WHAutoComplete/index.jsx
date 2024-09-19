@@ -8,8 +8,32 @@ import SelectedItems from './components/SelectedItems';
 import './styles.scss';
 import '../../styles.scss';
 
+const translations = {
+  lv: {
+    placeholder: 'Izvēlēties',
+    search: 'Meklēt',
+    selected: 'Izvēlēti',
+    clear: 'Notīrīt',
+    noOptions: 'Nav ierakstu'
+  },
+  en: {
+    placeholder: 'Select',
+    search: 'Search',
+    selected: 'Selected',
+    clear: 'Clear',
+    noOptions: 'No options'
+  },
+  ru: {
+    placeholder: 'Выбирать',
+    search: 'Искать',
+    selected: 'Выбрано',
+    selected: 'Очистить',
+    noOptions: 'Нет вариантов'
+  },
+};
+
 const WHAutoComplete = ({
-  placeholder = 'Izvēlies',
+  placeholder = '',
   locale = 'lv',
   multiselect = false,
   required = false,
@@ -28,23 +52,10 @@ const WHAutoComplete = ({
   const autoCompleteRef = useRef(null);
   const optionRefs = useRef([]);
 
-  const translations = {
-    lv: {
-      search: 'Meklēt',
-      selected: 'Izvēlēti',
-    },
-    en: {
-      search: 'Search',
-      selected: 'Selected',
-    },
-    ru: {
-      search: 'Искать',
-      selected: 'Выбрано',
-    },
-  };
+  const translatedPlaceholder = placeholder || translations[locale].placeholder
 
   const selectedItems = determineSelectedItems({
-    placeholder,
+    placeholder: translatedPlaceholder,
     value,
     options,
     multiselect,
@@ -174,31 +185,31 @@ const WHAutoComplete = ({
     if (!showingSelection) return;
 
     switch (e.key) {
-    case 'ArrowDown':
-      e.preventDefault();
-      setHighlightedIndex((prevIndex) => (prevIndex + 1) % reorderedOptions.length);
-      scrollIntoView((highlightedIndex + 1) % reorderedOptions.length);
-      break;
-    case 'ArrowUp':
-      e.preventDefault();
-      setHighlightedIndex((prevIndex) => (
-        (prevIndex - 1 + reorderedOptions.length) % reorderedOptions.length
-      ));
-      scrollIntoView((highlightedIndex - 1 + reorderedOptions.length) % reorderedOptions.length);
-      break;
-    case 'Enter':
-      e.preventDefault();
-      if (highlightedIndex >= 0 && highlightedIndex < reorderedOptions.length) {
-        handleOptionSelection(reorderedOptions[highlightedIndex].value);
-      }
-      break;
-    case 'Escape':
-    case 'Tab':
-      e.preventDefault();
-      setShowingSelection(false);
-      break;
-    default:
-      break;
+      case 'ArrowDown':
+        e.preventDefault();
+        setHighlightedIndex((prevIndex) => (prevIndex + 1) % reorderedOptions.length);
+        scrollIntoView((highlightedIndex + 1) % reorderedOptions.length);
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setHighlightedIndex((prevIndex) => (
+          (prevIndex - 1 + reorderedOptions.length) % reorderedOptions.length
+        ));
+        scrollIntoView((highlightedIndex - 1 + reorderedOptions.length) % reorderedOptions.length);
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (highlightedIndex >= 0 && highlightedIndex < reorderedOptions.length) {
+          handleOptionSelection(reorderedOptions[highlightedIndex].value);
+        }
+        break;
+      case 'Escape':
+      case 'Tab':
+        e.preventDefault();
+        setShowingSelection(false);
+        break;
+      default:
+        break;
     }
   };
 
@@ -248,7 +259,7 @@ const WHAutoComplete = ({
         <SelectedItems
           name={name}
           items={selectedItems}
-          placeholder={placeholder}
+          placeholder={translatedPlaceholder}
           text={translations[locale || 'lv'].selected}
           showingSelection={showingSelection}
           handleUnselect={handleBubbleUnselect}
@@ -259,6 +270,7 @@ const WHAutoComplete = ({
           <WHInput
             placeholder={translations[locale || 'lv'].search}
             autoFocus
+            locale={locale || 'lv'}
             icon="fa-solid fa-search"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
@@ -287,7 +299,7 @@ const WHAutoComplete = ({
               );
             })
           ) : (
-            <span className="wh-autocomplete-option-name no-results">Nav ierakstu</span>
+            <span className="wh-autocomplete-option-name no-results">{translations[locale].noOptions}</span>
           )}
         </div>
       </div>

@@ -3,6 +3,24 @@ import React from 'react';
 import './styles.scss';
 import '../../styles.scss';
 
+const translations = {
+  lv: {
+    search: 'Meklēt',
+    selected: 'Izvēlēti',
+    clear: 'Notīrīt'
+  },
+  en: {
+    search: 'Search',
+    selected: 'Selected',
+    clear: 'Clear'
+  },
+  ru: {
+    search: 'Искать',
+    selected: 'Выбрано',
+    selected: 'Очистить',
+  },
+};
+
 const WHInput = ({
   type,
   name,
@@ -12,6 +30,7 @@ const WHInput = ({
   width,
   onChange,
   disabled,
+  locale = 'lv',
   placeholder,
   autoFocus = false,
   addedText = '',
@@ -56,7 +75,7 @@ const WHInput = ({
     />
     {handleClear && value ? (
       <button type="button" className="wh-input-clear-btn" onClick={handleClear} disabled={disabled}>
-        {clearText || 'notīrīt'}
+        {clearText || translations[locale]}
       </button>
     ) : null}
     {!!addedButton && (
