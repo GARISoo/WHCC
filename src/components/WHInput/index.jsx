@@ -28,6 +28,7 @@ const WHInput = ({
   label,
   value,
   width,
+  step = '',
   onChange,
   disabled,
   locale = 'lv',
@@ -58,6 +59,7 @@ const WHInput = ({
       type={type || 'text'}
       id={name || ''}
       value={value || ''}
+      step={step}
       onChange={onChange}
       autoFocus={autoFocus}
       disabled={disabled}
