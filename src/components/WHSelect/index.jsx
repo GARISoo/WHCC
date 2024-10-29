@@ -3,8 +3,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import './styles.scss';
 import '../../styles.scss';
 
+const translations = {
+  lv: {
+    placeholder: 'Izvēlēties',
+    noOptions: 'Nav ierakstu'
+  },
+  en: {
+    placeholder: 'Select',
+    noOptions: 'No options'
+  },
+  ru: {
+    placeholder: 'Выбирать',
+    noOptions: 'Нет вариантов'
+  },
+};
+
 const WHSelect = ({
-  placeholder = 'Izvēlēties',
+  placeholder = '',
+  locale = 'lv',
   required = false,
   options = [],
   label,
@@ -20,6 +36,8 @@ const WHSelect = ({
   const selectRef = useRef(null);
   const optionRefs = useRef([]);
 
+  const translatedPlaceholder = placeholder || translations[locale].placeholder
+
   const toggleSelection = (e) => {
     e.stopPropagation();
     setShowingSelection((prev) => !prev);
@@ -27,7 +45,7 @@ const WHSelect = ({
   };
 
   const selectedItem = options.find((option) => option.value === value);
-  const selectedName = (selectedItem ? (selectedItem?.name || selectedItem?.title) : '') || placeholder;
+  const selectedName = (selectedItem ? (selectedItem?.name || selectedItem?.title) : '') || translatedPlaceholder;
 
   const handleOptionSelection = (targetValue) => {
     const event = {
@@ -174,7 +192,7 @@ const WHSelect = ({
             );
           })
         ) : (
-          <span className="wh-select-option-name no-results">Nav ierakstu</span>
+          <span className="wh-select-option-name no-results">{translations[locale].noOptions}</span>
         )}
       </div>
     </div>
