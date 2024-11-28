@@ -136,22 +136,22 @@ const WHDatePicker = ({
   };
 
   const handlePreviousMonth = () => {
-    const previousMonth = moment(currentMonth).startOf('month').subtract(1, 'month').format(dateFormat);
+    const previousMonth = moment(currentMonth, dateFormat).startOf('month').subtract(1, 'month').format(dateFormat);
     setCurrentMonth(previousMonth);
   };
 
   const handlePreviousYear = () => {
-    const previousYearMonth = moment(currentMonth).startOf('month').subtract(1, 'year').format(dateFormat);
+    const previousYearMonth = moment(currentMonth, dateFormat).startOf('month').subtract(1, 'year').format(dateFormat);
     setCurrentMonth(previousYearMonth);
   };
 
   const handleNextMonth = () => {
-    const nextMonth = moment(currentMonth).startOf('month').add(1, 'month').format(dateFormat);
+    const nextMonth = moment(currentMonth, dateFormat).startOf('month').add(1, 'month').format(dateFormat);
     setCurrentMonth(nextMonth);
   };
 
   const handleNextYear = () => {
-    const nextYearMonth = moment(currentMonth).startOf('month').add(1, 'year').format(dateFormat);
+    const nextYearMonth = moment(currentMonth, dateFormat).startOf('month').add(1, 'year').format(dateFormat);
     setCurrentMonth(nextYearMonth);
   };
 
