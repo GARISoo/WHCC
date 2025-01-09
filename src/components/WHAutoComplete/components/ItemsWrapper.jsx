@@ -75,7 +75,11 @@ const ItemsWrapper = ({
   return (
     <div className="wh-autocomplete-text-wrapper">
       <span className='wh-autocomplete-selected-multiple-text'>
-        {`${text} - ${items.length}`}
+        {items.length > 1 ? (
+          `${text} - ${items.length}`
+        ) : (
+          items?.[0]?.name || items?.[0]?.title
+        )}
       </span>
       {/* {visibleItems.map((item, index) => {
         const currentId = `text ${index.toString()} ${name}`;
