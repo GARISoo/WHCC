@@ -12,7 +12,7 @@ const TableHead = ({
   <thead className="wh-table-container__table-head">
     <tr className={`wh-table-container__table-row ${secondary ? 'added-padding' : ''}`}>
       {!secondary ? (
-        <th className="wh-table-container__table-th wh-text-small wh-text-gray">#</th>
+        <th className="wh-table-container__table-th wh-text-small wh-text-gray"> </th>
       ) : null}
       {titles?.map((title, index) => {
         const sortVisible = title && sortEnabled;

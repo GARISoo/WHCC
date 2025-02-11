@@ -1,6 +1,6 @@
 {
   "name": "whcc",
-  "version": "1.7.2",
+  "version": "1.7.5",
   "description": "Custom components of WH",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -50,7 +50,7 @@
     "build-lib": "^1.0.0",
     "moment": "^2.29.4",
     "npm": "^8.19.4",
-    "react-router-dom": "^5.x.x || ^6.x.x",
+    "react-router-dom": "^5.x.x || ^6.x.x || ^7.x.x",
     "sass": ">=1.69.5"
   }
 }
