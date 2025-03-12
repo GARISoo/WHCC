@@ -27,7 +27,7 @@ const translations = {
     placeholder: 'Выбирать',
     search: 'Искать',
     selected: 'Выбрано',
-    selected: 'Очистить',
+    clear: 'Очистить',
     noOptions: 'Нет вариантов'
   },
 };

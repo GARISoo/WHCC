@@ -1,6 +1,6 @@
 {
   "name": "whcc",
-  "version": "1.7.5",
+  "version": "1.7.6",
   "description": "Custom components of WH",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

@@ -128,7 +128,7 @@
     border-radius: 8px;
     position: absolute;
     top: 110%;
-    z-index: 2;
+    z-index: 6;
 }
 
 .wh-select-option-wrapper::-webkit-scrollbar {
@@ -172,13 +172,17 @@
 }
 
 .wh-select-option {
-    padding: .5rem;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 4px;
-    // transition: 0.1s ease-in-out;
     cursor: default;
-    white-space: nowrap;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    padding: 8px 8px 8px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 4px;
+    gap: 6px;
 
     &:hover {
         background-color: rgba(242, 242, 242, 0.5);
@@ -190,21 +194,26 @@
 }
 
 .wh-select-option-name {
-    font-weight: 400;
     font-size: 14px;
-    line-height: 20px;
+    font-weight: 400;
+    line-height: 18px;
     letter-spacing: 0.02em;
-    color: #626262;
+    text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    color: #626262;
+    text-align: left;
 }
 
 .wh-select-option-desc {
-    font-weight: 600;
-    font-size: 11px;
-    line-height: 16px;
-    letter-spacing: 0.04em;
-    text-align: right;
-    color: #9A9A9A;
-    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 14px;
+    width: 100%;
+    margin: 0;
+    text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    color: #9A9A9A;
+    text-align: left;
 }
